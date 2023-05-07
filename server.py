@@ -3,7 +3,7 @@ import time
 from tictactoe import *
 
 HOST = "127.0.0.1"
-PORT = 12345
+PORT = 12346
 clients = []
 
 
@@ -22,7 +22,7 @@ def establish_clients(s):
     while len(clients) != 2:
         conn, addr = s.accept()
         print(f"Connected to {addr}")
-        conn.sendall(bytes("Connected to server\nWaiting for opponent...", encoding="utf-8"))
+        # conn.sendall(bytes("Connected to server\nWaiting for opponent...", encoding="utf-8"))
         clients.append(conn)
 
 
@@ -39,42 +39,22 @@ def broadcast_data(data):
 
 
 def assign_symbol():
-    send_data("You are 'X'\nYou move first", 0)
-    send_data("You are 'O'\nOpponent moves first", 1)
+    send_data("3 X X", 0)
+    send_data("3 O X", 1)
     time.sleep(0.5)
-
 
 def play_game():
     global cells
-    player_id = 0
-    broadcast_data(f"{cells}|1")
+    sender_id = 0
+    receiver_id = 1
+    # broadcast_data(f"{cells}|1")
     while True:
-        conn = clients[player_id]
-        symbol = players[player_id]
-        data = conn.recv(50).decode()
+        move = clients[sender_id].recv(50).decode()
+        send_data(move, receiver_id)
 
-        coords = (int(coord) for coord in data.split())
-        add_to_state(coords, symbol)
-        cells = get_state_str()
-        winner = check_status()
-        player_id = (player_id * -1) + 1
+        sender_id = (sender_id * -1) + 1
+        receiver_id = (receiver_id * -1) + 1
 
-        '''for row in state:
-            print(row)
-        print()'''
-
-        if not winner:
-            data = f"{cells}|1"
-            send_data(data, player_id)
-            continue
-
-        if winner == "Draw":
-            data = f"{cells}|Draw!|0"
-        else:
-            data = f"{cells}|{winner} wins!|0"
-
-        broadcast_data(data)
-        break
 
 
 def close_server(s):

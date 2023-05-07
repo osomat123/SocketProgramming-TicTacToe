@@ -73,6 +73,7 @@ def get_state_str():
 
     return cells
 
+
 def add_to_state(coords, symbol):
     x, y = coords
     state[x][y] = symbol
