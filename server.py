@@ -3,7 +3,7 @@ import time
 from tictactoe import *
 
 HOST = "127.0.0.1"
-PORT = 12346
+PORT = 12345
 clients = []
 
 

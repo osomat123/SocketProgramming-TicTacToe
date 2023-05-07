@@ -1,5 +1,5 @@
 # constants
-EMPTY_SPACE = "_"
+EMPTY_SPACE = "-"
 
 
 class Board:
@@ -38,7 +38,7 @@ class Board:
             if (i+1) % self.size == 0:
                 formatted_state += "\n"
 
-        print(formatted_state, end="")
+        print(formatted_state)
 
     # Private Methods
     def __is_winning_pattern(self, pattern):

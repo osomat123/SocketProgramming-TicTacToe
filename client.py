@@ -2,7 +2,7 @@ import socket
 from Game import *
 
 HOST = "127.0.0.1"
-PORT = 12346
+PORT = 12345
 
 
 def get_game_info(server):

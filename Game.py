@@ -34,6 +34,7 @@ class Game:
 
             winner = self.board.find_winner()
 
+        self.board.print_board()
         self.__print_winner(winner)
 
     # Private Methods
